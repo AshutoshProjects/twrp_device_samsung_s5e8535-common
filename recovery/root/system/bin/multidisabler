@@ -1,0 +1,51 @@
+#
+# Copyright (C) 2025 AshutoshProjects
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+
+#!/system/bin/sh
+set -e
+
+# Paths
+BOOT_PARTITION="/dev/block/by-name/boot"
+TEMP_DIR="/tmp"
+OLD_BOOT_IMG="${TEMP_DIR}/old-boot.img"
+NEW_BOOT_IMG="${TEMP_DIR}/new-boot.img"
+UNPACKED_BOOT_DIR="${TEMP_DIR}/unpacked_boot"
+
+# Cleanup temporary files on exit
+cleanup() {
+    rm -rf "${UNPACKED_BOOT_DIR}" "${OLD_BOOT_IMG}" "${NEW_BOOT_IMG}"
+}
+trap cleanup EXIT
+
+echo "Disabling stock recovery restoration..."
+
+# Backup current boot image
+dd if="${BOOT_PARTITION}" of="${OLD_BOOT_IMG}" bs=4M
+
+# Unpack boot image
+mkdir -p "${UNPACKED_BOOT_DIR}"
+cd "${UNPACKED_BOOT_DIR}"
+magiskboot unpack -h "${OLD_BOOT_IMG}"
+
+# Repack boot image
+magiskboot repack "${OLD_BOOT_IMG}" "${NEW_BOOT_IMG}"
+cd -
+
+# Write new boot image
+dd if="${NEW_BOOT_IMG}" of="${BOOT_PARTITION}" bs=4M
+
+echo "Stock recovery restoration disabled successfully."

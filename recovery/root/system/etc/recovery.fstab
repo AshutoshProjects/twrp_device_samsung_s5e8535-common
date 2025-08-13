@@ -1,0 +1,65 @@
+#
+# Copyright (C) 2025 AshutoshProjects
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+
+#<src>                                    <mnt_point>    <type>    <mnt_flags and options>    <fs_mgr_flags>
+system	/system	erofs	ro	avb=vbmeta,logical,first_stage_mount
+system	/system	f2fs	ro	avb=vbmeta,logical,first_stage_mount
+system	/system	ext4	ro	avb=vbmeta,logical,first_stage_mount
+vendor	/vendor	erofs	ro	avb,logical,first_stage_mount
+product	/product	erofs	ro	avb,logical,first_stage_mount
+odm	/odm	erofs	ro	avb,logical,first_stage_mount
+/dev/block/by-name/boot        /boot           emmc        defaults                  recoveryonly
+/dev/block/by-name/recovery    /recovery       emmc        defaults                  recoveryonly
+/dev/block/by-name/metadata	/metadata	ext4	noatime,nosuid,nodev,noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic,sync	wait,first_stage_mount,formattable,check
+/dev/block/by-name/userdata	/data	f2fs	noatime,nosuid,nodev,discard,usrquota,grpquota,fsync_mode=nobarrier,reserve_root=32768,resgid=5678	recoveryonly,length=-20480,fscompress
+/dev/block/by-name/cache       /cache          ext4        defaults                  recoveryonly
+/dev/block/mmcblk0p1                                 /sdcard         vfat       defaults                  recoveryonly
+/dev/block/by-name/sec_efs     /efs            ext4        defaults                  recoveryonly
+/dev/block/by-name/sec_efs     /sec_efs        ext4        defaults                  recoveryonly
+#/dev/block/by-name/carrier     /carrier        ext4        defaults                  recoveryonly
+#/dev/block/by-name/hidden      /preload        ext4        defaults                  recoveryonly
+/dev/block/by-name/radio         /modem        emmc     defaults                  recoveryonly
+
+# Add misc for GOTA
+/dev/block/by-name/misc        /misc           emmc        defaults                  recoveryonly
+
+# Samsung ODE
+#/dev/block/by-name/keydata     /keydata        ext4        defaults                  recoveryonly
+#/dev/block/by-name/keyrefuge	/keyrefuge	f2fs	defaults	recoveryonly
+
+#Auto-generated code by FOTA Portal
+/dev/block/by-name/dtbo       /dtbo       emmc        default        recoveryonly
+/dev/block/by-name/prism     /prism        ext4        defaults                  recoveryonly
+/dev/block/by-name/optics     /optics        ext4        defaults                  recoveryonly
+/dev/block/by-name/vbmeta_system	/vbmeta_system	emmc	default	recoveryonly
+/dev/block/by-name/vendor_boot	/vendor_boot	emmc	default	recoveryonly
+/dev/block/by-name/vbmeta_samsung	/vbmeta_samsung	emmc	default	recoveryonly
+#system_ext	/system_ext	erofs	ro	wait,avb=vbmeta,logical,first_stage_mount
+vendor_dlkm	/vendor_dlkm	erofs	ro	wait,avb=vbmeta,logical,first_stage_mount
+system_dlkm	/system_dlkm	erofs	ro	wait,avb,logical,first_stage_mount
+system_dlkm	/system_dlkm	f2fs	ro	wait,avb,logical,first_stage_mount
+system_dlkm	/system_dlkm	ext4	ro	wait,avb,logical,first_stage_mount
+/dev/block/by-name/init_boot	/init_boot	emmc	default	recoveryonly
+
+
+
+
+
+
+
+
+

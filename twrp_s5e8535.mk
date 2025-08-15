@@ -26,7 +26,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit common device configuration
-$(call inherit-product, device/samsung/s5e8535-common/device.mk)
+$(call inherit-product, $(COMMON_PATH)/device.mk)
 
 # Include charger resources
 PRODUCT_PACKAGES += \

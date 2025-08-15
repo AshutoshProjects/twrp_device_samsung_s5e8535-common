@@ -26,11 +26,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit common device configuration
-$(call inherit-product, $(COMMON_PATH)/device.mk)
+$(call inherit-product, device/samsung/s5e8535-common/device.mk)
 
 # Include charger resources
 PRODUCT_PACKAGES += \
     charger_res_images
 
 # Copy recovery root files
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files, *, $(COMMON_PATH)/recovery/root, recovery/root)
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/samsung/s5e8535-common/recovery/root,$(TARGET_COPY_OUT_RECOVERY)/root)

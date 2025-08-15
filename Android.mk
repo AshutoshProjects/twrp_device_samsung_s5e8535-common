@@ -15,10 +15,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-# Get the current directory of this Makefile
-LOCAL_PATH := $(call my-dir)
-
 # Include all Makefiles under this directory only if the target matches
 ifeq ($(TARGET_S5E8535_COMMON), true)
-    include $(call all-makefiles-under, $(LOCAL_PATH))
+    include $(call all-makefiles-under,$(call my-dir))
 endif

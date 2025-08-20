@@ -15,6 +15,16 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
+# Auto-path snippet
+TREE_NAME := $(lastword $(subst /, ,$(firstword $(MAKEFILE_LIST))))
+TREE_NAME_NO_PREFIX := $(patsubst twrp_%,%,$(basename $(TREE_NAME)))
+TREE_PATH := $(subst _,/,$(TREE_NAME_NO_PREFIX))
+ifeq ($(findstring common,$(TREE_PATH)),)
+    DEVICE_PATH := $(TREE_PATH)
+else
+    COMMON_PATH := $(TREE_PATH)
+endif
+
 # Inherit common AOSP product configurations
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
@@ -26,7 +36,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit common device configuration
-$(call inherit-product, device/samsung/s5e8535-common/device.mk)
+$(call inherit-product, $(COMMON_PATH)/device.mk)
 
 # Include charger resources
 PRODUCT_PACKAGES += \
@@ -34,4 +44,4 @@ PRODUCT_PACKAGES += \
 
 # Copy recovery root files
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,device/samsung/s5e8535-common/recovery/root,$(TARGET_COPY_OUT_RECOVERY)/root)
+    $(call find-copy-subdir-files,*,$(COMMON_PATH)/recovery/root,$(TARGET_COPY_OUT_RECOVERY)/root)

@@ -15,9 +15,6 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-# Common paths
-COMMON_PATH := device/samsung/s5e8535-common
-
 # Bootloader settings
 BOARD_VENDOR := samsung
 TARGET_SOC := s5e8535
